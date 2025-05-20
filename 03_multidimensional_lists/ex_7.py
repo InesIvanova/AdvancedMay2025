@@ -5,7 +5,7 @@ for _ in range(row):
     row_data = [int(el) for el in input().split(", ")]
     matrix.append(row_data)
 
-max_sum = -9999999999999999
+max_sum = float('-inf')
 sub_matrix = []
 
 for row_index in range(row-1):
