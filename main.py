@@ -1,9 +1,11 @@
-a = filter(lambda i: i % 2, [1, 2, 3])
+import os
 
+from constants import ABSOLUTE_PROJECT_PATH
 
-for el in a:
-    print(el)
+path = os.path.join(ABSOLUTE_PROJECT_PATH, "files", "example_down3.txt")
 
+with open(path, "r") as file:
+    print(file.read().split("\n"))
+    print(file.closed)
 
-for el in a:
-    print(el)
+print(file.closed)
