@@ -1,0 +1,57 @@
+# Row winner
+
+Peter
+Georgi
+X
+1
+4
+2
+5
+3
+
+# Col winner
+
+Peter
+Georgi
+X
+2
+1
+5
+3
+8
+
+# Main diagonal winner
+
+Peter
+Georgi
+X
+1
+2
+5
+3
+9
+
+# Anti-diagonal winner
+Peter
+Georgi
+X
+3
+1
+5
+2
+7
+
+# No winner
+
+Player1
+Player2
+X
+1
+2
+3
+5
+4
+7
+6
+9
+8

@@ -61,9 +61,64 @@ def check_position(position: str, board: list[list[str]]) -> tuple[int, int]:
     return (row_index, col_index)
 
 
+def is_row_winner(board: list[list[str]], current_sign: str) -> bool:
+    for row in board:
+        if row.count(current_sign) == 3:
+            return True
+    return False
+
+def is_col_winner(board: list[list[str]], current_sign: str) -> bool:
+    for col_index in range(len(board)):
+        col_count = 0
+        for row_index in range(len(board)):
+            if board[row_index][col_index] == current_sign:
+                col_count += 1
+        if col_count == 3:
+            return True
+    return False
+
+
+def main_diagonal(board: list[list[str]], current_sign: str) -> bool:
+    count = 0
+    for row_index in range(len(board)):
+        if board[row_index][row_index] == current_sign:
+            count += 1
+    if count == 3:
+        return True
+    return False
+
+def is_opposite_diagonal(board: list[list[str]], current_sign: str) -> bool:
+    count = 0
+    for index in range(len(board)):
+        if board[index][len(board) -1 - index] == current_sign:
+            count += 1
+    if count == 3:
+        return True
+    return False
+
+
+def is_diagonal_winner(board: list[list[str]], current_sign: str) -> bool:
+    if main_diagonal(board, current_sign):
+        return True
+    if is_opposite_diagonal(board, current_sign):
+        return True
+    return False
+
+
+def is_winner(board: list[list[str]], current_sign: str) -> bool:
+    is_row = is_row_winner(board, current_sign)
+    is_col = is_col_winner(board, current_sign)
+    is_diagonal = is_diagonal_winner(board, current_sign)
+
+    if is_row or is_col or is_diagonal:
+        return True
+    return False
+
+
 board = [[' ', ' ', ' '] for _ in range(3)]
 
 player_1_data, player_2_data = read_players_data()
+print_board_numeration()
 print(f"{player_1_data[0]} starts first!")
 
 turns = 1
@@ -84,5 +139,13 @@ while True:
         board[row_index][col_index] = current_player_sign
         print_game_board(board)
         turns += 1
+
+        if turns >= 5 and is_winner(board, current_player_sign):
+            print(f"{current_player_name} won!")
+            break
+
+        if turns == 10:
+            print(f"Draw! No winner this game!")
+            break
 
 
