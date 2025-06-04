@@ -106,11 +106,7 @@ def is_diagonal_winner(board: list[list[str]], current_sign: str) -> bool:
 
 
 def is_winner(board: list[list[str]], current_sign: str) -> bool:
-    is_row = is_row_winner(board, current_sign)
-    is_col = is_col_winner(board, current_sign)
-    is_diagonal = is_diagonal_winner(board, current_sign)
-
-    if is_row or is_col or is_diagonal:
+    if is_row_winner(board, current_sign) or is_col_winner(board, current_sign) or is_diagonal_winner(board, current_sign):
         return True
     return False
 
@@ -140,12 +136,10 @@ while True:
         print_game_board(board)
         turns += 1
 
-        if turns >= 5 and is_winner(board, current_player_sign):
+        if turns > 5 and is_winner(board, current_player_sign):
             print(f"{current_player_name} won!")
             break
 
         if turns == 10:
             print(f"Draw! No winner this game!")
             break
-
-
