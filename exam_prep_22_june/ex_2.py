@@ -1,11 +1,4 @@
-direction_mapper = {
-    "up": (-1, 0),
-    "down": (1, 0),
-    "left": (0, -1),
-    "right": (0, 1)
-}
-
-def calculate_next_place(current_r, current_c, direction, n):
+def calculate_next_place(current_r, current_c, direction, n, direction_mapper):
     row_movement, col_movement = direction_mapper[direction]
     next_row_index = (current_r + row_movement) % n
     next_col_index = (current_c + col_movement) % n
@@ -15,6 +8,15 @@ def calculate_next_place(current_r, current_c, direction, n):
 def print_matrix(matrix):
     for row in matrix:
         print(''.join(row))
+
+
+direction_mapper = {
+    "up": (-1, 0),
+    "down": (1, 0),
+    "left": (0, -1),
+    "right": (0, 1)
+}
+
 
 n = int(input())
 total_nectar = 0
@@ -33,7 +35,7 @@ for i in range(n):
 direction = input()
 while True:
     current_row_index, current_col_index = bee_position
-    next_row, next_col = calculate_next_place(current_row_index, current_col_index, direction, n)
+    next_row, next_col = calculate_next_place(current_row_index, current_col_index, direction, n, direction_mapper)
     next_element = matrix[next_row][next_col]
     matrix[current_row_index][current_col_index] = "-"
     matrix[next_row][next_col] = "B"
@@ -58,9 +60,10 @@ while True:
         bee_energy = total_nectar - 30
         total_nectar = 30
         has_restored_energy = True
-        if bee_energy <= 0:
-            print(f"This is the end! Beesy ran out of energy.")
-            break
+
+    if bee_energy <= 0:
+        print(f"This is the end! Beesy ran out of energy.")
+        break
     direction = input()
 
 print_matrix(matrix)
