@@ -1,13 +1,16 @@
-class Person:
-    def __init__(self, age=0):
-        self.age = age
+class MyClass:
+    def __init__(self, value):
+        self._value = value
 
-    def sing(self):
-        return 'singing...'
+    @property
+    def value(self):
+        return self._value
 
-    def eat(self):
-        self.sing()
+    @value.getter  # Redefine the getter for 'value'
+    def value(self):
+        print("Getting the value")
+        return self._value * 2  # Modify the returned value
 
 
-p = Person(20)
-print(p.age)
+obj = MyClass(10)
+print(obj.value)
