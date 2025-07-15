@@ -1,16 +1,31 @@
-class MyClass:
-    def __init__(self, value):
-        self._value = value
+from abc import abstractmethod, ABC
+
+
+class Person(ABC):
+    MIN_AGE = 0
+    MAX_AGE = 100
+
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
 
     @property
-    def value(self):
-        return self._value
+    def age(self):
+        return self.__age
 
-    @value.getter  # Redefine the getter for 'value'
-    def value(self):
-        print("Getting the value")
-        return self._value * 2  # Modify the returned value
+    @age.setter
+    def age(self, value):
+        if value <= self.MIN_AGE:
+            raise ValueError("age must be positive")
+        self.__age = value
+
+    @abstractmethod
+    def greet(self):
+        pass
 
 
-obj = MyClass(10)
-print(obj.value)
+class Employee(Person):
+    MIN_AGE = 16
+
+    def greet(self):
+        print("Employee {}".format(self.name))
