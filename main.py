@@ -1,54 +1,72 @@
-# class first_n_iterator:
-#     def __init__(self, end):
-#         self.current = -1
-#         self.end = end
+# class Fibonacci:
+#     def __init__(self):
+#         self.cache = {}
 #
-#     def __iter__(self):
-#         return self
-#
-#     def __next__(self):
-#         self.current += 1
-#         if self.current >= self.end:
-#             raise StopIteration
-#         return self.current
-#
-#
-# my_obj = first_n_iterator(5)
-# for num in my_obj:
-#     print(num)
+#     def __call__(self, n):
+#         if n not in self.cache:
+#             if n == 0:
+#                 self.cache[0] = 0
+#             elif n == 1:
+#                 self.cache[1] = 1
+#             else:
+#                 self.cache[n] = self(n-1) + self(n-2)
+#         return self.cache[n]
 #
 #
-# def first_n(n):
-#     num = 0
-#     while num < n:
-#         yield num
-#         num += 1
+# fib = Fibonacci()
+#
+# for i in range(5):
+#     print(fib(i))
+#
+# print(fib.cache)
 #
 #
-# my_obj_gen = first_n(5)
-# for num in my_obj_gen:
-#     print(num)
-#
+# # class Person:
+# #     def __init__(self, name, age):
+# #         self.name = name
+# #         self.age = age
+# #
+# #     def __call__(self):
+# #         return "hi"
+# #
+# #
+# # p = Person("John", 18)
+# # print(p())
+from functools import wraps
 
 
-def my_gen():
-    n = 1
-    print('This is printed first')
-    yield n
-
-    n += 1
-    print('This is printed second')
-    yield n
-
-    n += 1
-    print('This is printed at last')
-    yield n
+def func_logger(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        log_string = function.__name__ + " was called"
+        with open("out.log", 'a') as opened_file:
+            opened_file.write(log_string + '\n')
+    return wrapper
 
 
-result = my_gen()
+# class func_logger:
+#
+#     _logfile = 'out.log'
+#
+#     def __init__(self, func):
+#         self.func = func
+#
+#     def __call__(self, *args, **kwargs):
+#         log_string = self.func.__name__ + " was called"
+#         with open(self._logfile, 'a') as opened_file:
+#             opened_file.write(log_string + '\n')
+#         return self.func(*args, **kwargs)
 
-my_list = [1, 3, 6, 10]
 
-result = (x**2 for x in my_list)
-for el in result:
-    print(el)
+@func_logger
+def say_hi(name):
+    print(f"Hi, {name}")
+
+@func_logger
+def say_bye(name):
+    print(f"Bye, {name}")
+
+
+say_hi("Peter")
+say_bye("Peter")
+
